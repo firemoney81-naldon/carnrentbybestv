@@ -1,23 +1,585 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
+
+
+  <!-- SEO 최적화 JSON-LD 스키마 -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "테슬라 모델X 리스 서비스",
+    "description": "2026년형 테슬라 모델X 신차 리스 상품을 비교하고 추천하는 전문 서비스입니다. 합리적인 가격과 다양한 할인 혜택으로 모델X를 경험하세요.",
+    "brand": {
+      "@type": "Brand",
+      "name": "테슬라"
+    },
+    "model": "Model X",
+    "areaServed": "대한민국",
+    "offers": {
+      "@type": "OfferCatalog",
+      "name": "테슬라 모델X 리스 상품 목록",
+      "itemListElement": [
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "모델X 스탠다드 리스 (48개월)"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "1000000",
+            "priceCurrency": "KRW",
+            "description": "선납금 조건에 따른 월 납입금 예시 (정확한 금액은 견적 문의 필요)"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "모델X 롱레인지 리스 (36개월)"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "1200000",
+            "priceCurrency": "KRW",
+            "description": "선납금 조건에 따른 월 납입금 예시 (정확한 금액은 견적 문의 필요)"
+          }
+        },
+        {
+          "@type": "Offer",
+          "itemOffered": {
+            "@type": "Product",
+            "name": "모델X Plaid 리스 (60개월)"
+          },
+          "priceSpecification": {
+            "@type": "PriceSpecification",
+            "price": "1500000",
+            "priceCurrency": "KRW",
+            "description": "선납금 조건에 따른 월 납입금 예시 (정확한 금액은 견적 문의 필요)"
+          }
+        }
+      ]
+    },
+    "review": [
+      {
+        "@type": "Review",
+        "author": "김*호",
+        "datePublished": "2026-03-10",
+        "reviewBody": "복잡한 리스 조건들을 한눈에 비교할 수 있어 좋았습니다. 빠른 출고와 친절한 상담에 만족합니다.",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": "5",
+          "bestRating": "5"
+        }
+      }
+    ]
+  }
+  </script>
+  
+  <!-- CSS Styles -->
+  <style>
+    /* 기본 폰트, 배경 톤, 본문 컬러 */
+    body {
+      font-family: "Noto Sans KR", sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7f9fc; /* 부드러운 배경색 */
+      color: #333;
+      line-height: 1.7;
+    }
+    header {
+      background-color: #1a237e; /* 테슬라 이미지에 어울리는 딥 블루 */
+      color: #fff;
+      padding: 2.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -1px;
+    }
+    header p {
+      margin-top: 0.5rem;
+      font-size: 1.1rem;
+      font-weight: 300;
+    }
+    nav ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+    nav a:hover {
+      background-color: #3949ab;
+      color: #fff;
+    }
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background-color: #ffffff;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      border-radius: 12px;
+    }
+    h2 {
+      color: #1a237e; /* 딥 블루 */
+      margin-top: 2.5rem;
+      font-size: 2rem;
+      border-bottom: 3px solid #e0e0e0;
+      padding-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    h3 {
+      color: #3f51b5; /* 미디엄 블루 */
+      margin-top: 2rem;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    p, ul, table {
+      margin-bottom: 1.5rem;
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    .image-container {
+      margin: 2rem 0;
+      text-align: center;
+    }
+    .image-container img {
+      width: 100%;
+      max-width: 800px;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+    .data-table th,
+    .data-table td {
+      padding: 1rem;
+      border: 1px solid #e0e0e0;
+      text-align: center;
+    }
+    .data-table th {
+      background-color: #f0f4f7; /* 밝은 회색 배경 */
+      color: #1a237e;
+      font-weight: 700;
+    }
+    .cta-button {
+      display: inline-block;
+      background-color: #f44336; /* 강렬한 레드 CTA */
+      color: #fff;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 5px;
+      text-decoration: none;
+      margin: 2rem 0;
+      transition: background-color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .cta-button:hover {
+      background-color: #d32f2f;
+    }
+    .keyword-tags {
+      margin: 2rem 0;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+    }
+    .keyword-tags a {
+      background-color: #e3f2fd; /* 밝은 하늘색 태그 배경 */
+      color: #1a237e;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background-color 0.3s, transform 0.2s;
+    }
+    .keyword-tags a:hover {
+      background-color: #bbdefb;
+      transform: translateY(-2px);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+      background-color: #eef1f4;
+      margin-top: 3rem;
+    }
+    /* FAQ 아코디언 */
+    dl dt {
+      font-weight: 700;
+      margin-top: 1.5rem;
+      cursor: pointer;
+      color: #1a237e;
+      padding: 0.8rem 1rem;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      border-left: 5px solid #f44336;
+    }
+    dl dd {
+      margin-left: 0;
+      padding: 1rem;
+      background-color: #ffffff;
+      border: 1px solid #eee;
+      border-top: none;
+      border-bottom-left-radius: 8px;
+      border-bottom-right-radius: 8px;
+      display: none;
+      font-size: 0.95rem;
+    }
+    dl dt.active + dd {
+      display: block;
+    }
+    /* 인풋폼 스타일 */
+    .contact-form {
+      background-color: #f7f9fc;
+      border: 1px solid #e0e0e0;
+      border-radius: 10px;
+      padding: 2rem;
+      margin-top: 2rem;
+    }
+    .contact-form label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+      color: #333;
+    }
+    .contact-form input[type="text"],
+    .contact-form input[type="email"],
+    .contact-form input[type="tel"],
+    .contact-form textarea {
+      width: calc(100% - 20px);
+      padding: 10px;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background-color: #1a237e;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .contact-form button:hover {
+      background-color: #3949ab;
+    }
+    .graph-container {
+      margin: 2rem 0;
+    }
+    .graph-container h3 {
+      text-align: center;
+    }
+    .bar-chart {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      height: 200px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
+    .bar {
+      width: 20%;
+      background-color: #3f51b5;
+      color: #fff;
+      text-align: center;
+      font-weight: 500;
+      transition: height 0.5s;
+      margin: 0 5px;
+      border-radius: 5px 5px 0 0;
+    }
+    .bar-label {
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 5px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>테슬라 모델X 리스 2026 완벽 분석 가이드</h1>
+    <p>가장 합리적인 비용으로 테슬라 모델X를 경험할 수 있는 방법을 전문가가 추천해 드립니다.</p>
     <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
+      <ul>
+        <li><a href="#intro">모델X 리스란?</a></li>
+        <li><a href="#comparison">리스 vs. 구매 장단점</a></li>
+        <li><a href="#pricing">2026년 리스 가격표</a></li>
+        <li><a href="#benefits">할인 및 혜택</a></li>
+        <li><a href="#review">실제 후기 및 FAQ</a></li>
+        <li><a href="#contact">견적 문의</a></li>
+      </ul>
     </nav>
-    <main>
-      <h1>Home page</h1>
-    </main>
-  </body>
-</html>
+  </header>
+
+  <main>
+    <div class="image-container">
+      <img src="https://images.pexels.com/photos/112460/pexels-photo-112460.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="테슬라 모델X 차량 이미지" loading="lazy">
+    </div>
+
+    <section id="intro">
+      <h2>테슬라 모델X 리스, 2026년 최적의 선택은?</h2>
+      <p>럭셔리 전기 SUV의 대명사, 테슬라 모델X는 미래형 디자인과 압도적인 성능으로 많은 사랑을 받고 있습니다. 특히 <strong>테슬라 모델X 리스</strong>는 높은 초기 비용 부담 없이 차량을 이용할 수 있는 가장 효과적인 방법으로 각광받고 있습니다. 2026년 현재, 전기차 보조금 정책의 변화와 함께 리스 조건도 다양해지고 있어 꼼꼼한 비교가 필수적입니다.</p>
+      <p>모델X의 리스 상품은 개인 사업자나 법인 뿐만 아니라 일반 소비자에게도 인기가 높습니다. 복잡한 세금 문제, 감가상각 부담 없이 신차를 이용하고 일정 기간 후 반납이나 재구매를 선택할 수 있는 유연성이 최대 장점입니다. 본 가이드를 통해 테슬라 모델X 리스에 대한 모든 것을 자세히 알아보고, 가장 합리적인 <strong>견적</strong>을 받아보시길 바랍니다.</p>
+
+      <div class="keyword-tags" aria-label="관련 키워드">
+        <a href="#pricing">모델X 리스 가격</a>
+        <a href="#comparison">리스 장단점</a>
+        <a href="#benefits">모델X 할인 혜택</a>
+        <a href="#review">테슬라 리스 후기</a>
+        <a href="#contact">테슬라 모델X 견적</a>
+        <a href="#benefits">모델X 보조금</a>
+        <a href="#pricing">테슬라 리스 저렴한곳</a>
+        <a href="#pricing">모델X 월납입금</a>
+        <a href="#comparison">리스 vs 장기렌트</a>
+        <a href="#pricing">2026년 모델X 가격</a>
+      </div>
+    </section>
+
+    <section id="comparison">
+      <h2>테슬라 모델X 리스 vs. 구매 vs. 장기렌트 장단점 비교</h2>
+      <p>테슬라 모델X를 이용하는 방법은 크게 현금/할부 구매, 리스, 장기렌트 세 가지가 있습니다. 각 방법은 고유한 <strong>장점과 단점</strong>을 가지고 있으며, 개인의 재정 상황과 운용 목적에 따라 최적의 선택이 달라집니다. 특히 <strong>모델X 장기렌트</strong>와 <strong>테슬라 리스</strong>는 혼동하기 쉬우므로, 명확한 <strong>차이점</strong>을 이해하는 것이 중요합니다.</p>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>구분</th>
+            <th>장기렌트 (장점)</th>
+            <th>리스 (장점)</th>
+            <th>구매 (장점)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>초기 비용</strong></td>
+            <td>매우 저렴 (보증금/선납금 선택 가능)</td>
+            <td>저렴 (보증금/선납금 선택 가능)</td>
+            <td>높음 (취득세, 등록세 등 초기 납부)</td>
+          </tr>
+          <tr>
+            <td><strong>월 납입금</strong></td>
+            <td>저렴한 편 (보험료, 세금 포함)</td>
+            <td>차량 금액 기반 산정 (개별 보험 가입)</td>
+            <td>높음 (원금+이자)</td>
+          </tr>
+          <tr>
+            <td><strong>보험/세금</strong></td>
+            <td>렌트사 명의로 일괄 처리 (할증 無)</td>
+            <td>개인 명의로 개별 가입</td>
+            <td>개인 명의로 개별 납부</td>
+          </tr>
+          <tr>
+            <td><strong>번호판</strong></td>
+            <td>하, 허, 호 (렌터카 번호판)</td>
+            <td>일반 승용차 번호판</td>
+            <td>일반 승용차 번호판</td>
+          </tr>
+          <tr>
+            <td><strong>만기 처리</strong></td>
+            <td>인수/반납/재계약 선택 가능</td>
+            <td>인수/반납/재리스 선택 가능</td>
+            <td>차량 소유 (감가상각 직접 부담)</td>
+          </tr>
+        </tbody>
+      </table>
+      <p><strong>결론:</strong> <strong>테슬라 모델X 리스</strong>는 일반 번호판을 사용하면서도 초기 비용 부담을 줄이고자 하는 분들에게 적합합니다. 반면, 보험 경력 단절 없이 낮은 월 비용으로 차량을 운용하고 싶은 분들에게는 <strong>모델X 장기렌트</strong>가 더 유리할 수 있습니다.</p>
+
+      <h3>모델X 리스 장점 분석 (왜 리스를 선택해야 하는가?)</h3>
+      <ul>
+        <li><strong>세금 절감 효과:</strong> 개인 사업자 및 법인은 리스료 전액을 손비 처리하여 세금 공제 혜택을 받을 수 있습니다.</li>
+        <li><strong>낮은 초기 비용:</strong> 보증금이나 선납금을 조절하여 초기 지출을 최소화할 수 있습니다.</li>
+        <li><strong>유연한 만기 선택:</strong> 계약 기간 만료 후 차량을 인수할지, 반납하고 새 차로 바꿀지 자유롭게 선택 가능합니다.</li>
+        <li><strong>재산세 비과세:</strong> 리스 차량은 금융사 명의로 등록되므로, 차량가액에 따른 재산세가 부과되지 않습니다.</li>
+      </ul>
+
+      <h3>모델X 리스 단점 분석 (리스 전 반드시 고려해야 할 사항)</h3>
+      <ul>
+        <li><strong>중도 해지 수수료:</strong> 계약 기간 중 해지 시 위약금이 발생하므로 신중한 결정이 필요합니다.</li>
+        <li><strong>총비용 측면:</strong> 리스 기간 동안의 총 비용은 현금 구매보다 높을 수 있습니다. 월 <strong>평균</strong> 납입금만 보고 판단해서는 안됩니다.</li>
+        <li><strong>주행거리 제한:</strong> 연간 약정 주행거리를 초과할 경우 추가 요금이 발생합니다.</li>
+      </ul>
+    </section>
+
+    <section id="pricing">
+      <h2>테슬라 모델X 리스 가격 및 2026년 견적 분석</h2>
+      <p><strong>테슬라 모델X 리스 가격</strong>은 차량 트림, 계약 기간 (보통 36개월~60개월), 잔존 가치, 선납금 유무에 따라 크게 달라집니다. 2026년 기준, 모델X의 국내 판매 가격은 약 1억 2천만 원대부터 시작합니다. 리스는 이 차량가액을 기준으로 산정됩니다.</p>
+      <p>정확한 <strong>모델X 리스 견적</strong>을 받기 위해서는 <strong>저렴한곳</strong>을 찾는 노력과 더불어, 리스 조건 하나하나를 꼼꼼하게 따져보아야 합니다. 특히, 금융사별 <strong>프로모션 할인</strong>이나 <strong>신규 가입 혜택</strong> 여부가 최종 월 납입금에 큰 영향을 미칩니다.</p>
+
+      <h3>2026년 테슬라 모델X 리스 예상 비용표 (예시 견적)</h3>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>차량 트림</th>
+            <th>차량가 (KRW)</th>
+            <th>계약 기간</th>
+            <th>선납금 20%</th>
+            <th>월 납입금 (예상)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>모델X 스탠다드</td>
+            <td>120,000,000</td>
+            <td>48개월</td>
+            <td>24,000,000</td>
+            <td><strong>950,000 ~ 1,100,000</strong></td>
+          </tr>
+          <tr>
+            <td>모델X 롱레인지</td>
+            <td>135,000,000</td>
+            <td>48개월</td>
+            <td>27,000,000</td>
+            <td><strong>1,050,000 ~ 1,200,000</strong></td>
+          </tr>
+          <tr>
+            <td>모델X Plaid</td>
+            <td>150,000,000</td>
+            <td>48개월</td>
+            <td>30,000,000</td>
+            <td><strong>1,200,000 ~ 1,400,000</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size: 0.85rem; color: #777; margin-top: 0.5rem;">*위 표는 2026년 예상 가격이며, 잔존가치 및 금융사 금리에 따라 <strong>금액</strong>이 변동될 수 있습니다. 정확한 견적은 전문가 상담을 통해 확인하세요.</p>
+
+      <h3>리스료 산출 시 고려할 핵심 요소</h3>
+      <p><strong>월 납입금</strong>을 결정하는 요소는 단순히 차량 가격만 있는 것이 아닙니다. <strong>할인</strong> 적용 여부, <strong>잔존가치</strong> 설정, 그리고 금융사의 <strong>리스 금리</strong>가 핵심입니다. 특히 잔존가치 설정은 만기 시 인수 가격과 직결되므로, <strong>저렴한</strong> 월 납입금에 현혹되기보다 만기 시 총 비용을 고려해야 합니다. 높은 잔존가치 설정은 월 납입금을 낮추지만, 만기 시 인수 가격이 높아지는 <strong>장단점</strong>이 있습니다.</p>
+
+      <div class="graph-container">
+        <h3>리스료 변동 요인 비중 (2026년 기준)</h3>
+        <div class="bar-chart">
+          <div class="bar" style="height: 80%;">금리/수수료</div>
+          <div class="bar" style="height: 65%;">잔존가치 설정</div>
+          <div class="bar" style="height: 50%;">선납금 비중</div>
+          <div class="bar" style="height: 40%;">차량 할인 혜택</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits">
+      <h2>테슬라 모델X 리스 특별 할인 및 혜택 (보조금 포함)</h2>
+      <p>테슬라 모델X는 고가 차량이므로 전기차 보조금 대상에서 제외될 가능성이 높습니다. 따라서 <strong>보조금</strong>보다는 금융사 자체 <strong>할인</strong> 프로모션이나 <strong>신규 가입 혜택</strong>을 적극적으로 활용해야 합니다. <strong>전문 업체</strong>들은 비공식적인 딜러 할인을 확보하고 있어, 일반 소비자가 직접 리스 상품을 찾을 때보다 더 많은 <strong>현금지원</strong>이나 <strong>상품권</strong> 혜택을 제공하는 경우가 많습니다.</p>
+
+      <h3>숨겨진 혜택 찾아내기</h3>
+      <ul>
+        <li><strong>만기 시점 매입 약정:</strong> 일부 <strong>전문 업체</strong>는 만기 시 차량 매입을 약정하여 <strong>상품</strong>의 경쟁력을 높입니다.</li>
+        <li><strong>리스 연계 보험 상품:</strong> 리스와 보험을 함께 가입할 경우 추가 <strong>할인</strong>을 받을 수 있는 <strong>혜택</strong>이 있습니다.</li>
+        <li><strong>리스료 선납금 이율:</strong> <strong>평균</strong>적인 선납금 이율보다 더 좋은 조건을 제시하는 <strong>회사</strong>를 찾는 것이 중요합니다.</li>
+      </ul>
+
+      <p><strong>참고:</strong> 2026년 전기차 정책에 따라 고가 전기차에 대한 정부의 <strong>지원금</strong> 정책이 일부 변경될 수 있습니다. <strong>신규</strong>로 모델X 리스를 고려한다면, 최신 <strong>정책</strong>을 확인해야 합니다.</p>
+    </section>
+
+    <section id="review">
+      <h2>테슬라 모델X 리스 실제 후기 및 FAQ</h2>
+      <p>실제 <strong>테슬라 모델X 리스 후기</strong>를 살펴보면, 만족도가 높은 편입니다. 특히 잦은 신차 교체를 선호하거나 사업상 품위 유지를 중요하게 생각하는 분들에게 긍정적인 평가를 받고 있습니다. <strong>내돈내산</strong> 후기를 통해 리스 상품의 <strong>장단점</strong>을 파악할 수 있습니다.</p>
+
+      <div class="keyword-tags" aria-label="리뷰 관련 키워드">
+        <a href="#review">모델X 리스 후기</a>
+        <a href="#review">테슬라 리스 내돈내산</a>
+        <a href="#review">모델X 승차감</a>
+        <a href="#review">테슬라 리스 비용</a>
+        <a href="#review">전문업체 추천</a>
+      </div>
+
+      <h3>고객 자주 묻는 질문 (FAQ)</h3>
+      <dl>
+        <dt tabindex="0" aria-expanded="false">테슬라 모델X 리스 심사 기준이 궁금합니다.</dt>
+        <dd>일반적으로 신용 점수, 소득 증빙 자료(재직증명서 및 급여 명세서), 개인 사업자나 법인일 경우 사업자 등록증 및 재무제표가 필요합니다. 신용 <strong>등급</strong>이나 <strong>순위</strong>에 따라 보증금 비율이 달라질 수 있습니다.</dd>
+        <dt tabindex="0" aria-expanded="false">리스 만기 후 인수가격이 너무 비싸면 어떻게 해야 하나요?</dt>
+        <dd>만기 시점에 잔존가치(인수가격)가 높게 설정되어 있다면, 반납 후 새로운 <strong>상품</strong>으로 재리스를 진행하거나 다른 차량을 선택하는 것이 합리적입니다. 인수가격을 낮추려면 처음부터 월 납입금을 높이는 방식으로 계약해야 합니다.</dd>
+        <dt tabindex="0" aria-expanded="false">다른 <strong>업체</strong>와 비교했을 때 리스 <strong>차이점</strong>이 있나요?</dt>
+        <dd>각 금융사(캐피탈)는 <strong>평균</strong> 금리와 잔존가치 설정 기준이 다릅니다. 따라서 한 곳의 <strong>견적</strong>만 받지 말고, 여러 <strong>회사</strong>의 <strong>비교</strong> 견적을 받아보는 것이 <strong>저렴한</strong> 리스료를 찾는 핵심입니다.</dd>
+      </dl>
+    </section>
+
+    <section id="contact">
+      <h2>테슬라 모델X 리스 무료 견적 및 상담 요청</h2>
+      <p>가장 합리적인 <strong>테슬라 모델X 리스 견적</strong>을 받아보세요. 2026년 최신 모델X 스펙과 <strong>가격</strong> 정보를 바탕으로 고객님께 맞는 맞춤형 <strong>상품</strong>을 <strong>추천</strong>해 드립니다. 아래 간단한 폼을 작성하시면 <strong>전문가</strong>가 신속하게 연락드리겠습니다.</p>
+
+      <div class="contact-form">
+        <form action="#" method="post">
+          <label for="name">성함:</label>
+          <input type="text" id="name" name="name" required placeholder="예: 홍길동">
+
+          <label for="phone">연락처:</label>
+          <input type="tel" id="phone" name="phone" required placeholder="예: 010-1234-5678">
+
+          <label for="email">이메일:</label>
+          <input type="email" id="email" name="email" placeholder="예: example@email.com">
+
+          <label for="lease-term">희망 리스 기간 (개월):</label>
+          <input type="text" id="lease-term" name="lease-term" placeholder="예: 36개월 또는 48개월">
+
+          <label for="message">문의 사항 (차량 트림, 희망 가격대 등):</label>
+          <textarea id="message" name="message" rows="4" placeholder="자세한 문의 내용을 남겨주시면 맞춤 견적에 도움이 됩니다."></textarea>
+
+          <button type="submit">견적 문의 신청하기</button>
+        </form>
+      </div>
+
+      <a href="#contact" class="cta-button">무료 견적 바로 신청</a>
+    </section>
+
+    <section id="references">
+      <h2>공식 정보 및 신뢰할 수 있는 참고자료</h2>
+      <p>테슬라 모델X 리스와 관련된 신뢰할 수 있는 정보 출처를 확인하여 정확한 정보를 얻으세요. 정부 기관 및 공식 채널을 통해 차량 관련 정책 변화나 <strong>지원금</strong> 정보를 확인할 수 있습니다.</p>
+      <ul>
+        <li><a href="https://www.tesla.com/ko_KR/modelx" target="_blank" rel="noopener">테슬라 코리아 공식 웹사이트 - 모델X 상세 정보</a></li>
+        <li><a href="https://www.molit.go.kr" target="_blank" rel="noopener">대한민국 국토교통부 – 자동차 등록 관련 정책</a></li>
+        <li><a href="https://www.consumer.go.kr" target="_blank" rel="noopener">한국소비자원 – 리스 계약 관련 소비자 피해 예방 정보</a></li>
+        <li><a href="https://ko.wikipedia.org/wiki/테슬라_모델_X" target="_blank" rel="noopener">위키피디아 – 테슬라 모델 X 정의 및 개요</a></li>
+        <li><a href="https://www.gov.kr/portal/loc_ev_vehicle/main" target="_blank" rel="noopener">정부24 - 전기차 구매 보조금 지원 정책 안내</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <script>
+    // FAQ 아코디언 기능 활성화
+    document.querySelectorAll('dl dt').forEach((dt) => {
+      dt.addEventListener('click', () => {
+        const dd = dt.nextElementSibling;
+        const expanded = dt.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('dl dt').forEach(item => {
+          item.classList.remove('active');
+          item.setAttribute('aria-expanded', 'false');
+          item.nextElementSibling.style.display = 'none';
+        });
+        if (!expanded) {
+          dt.classList.add('active');
+          dt.setAttribute('aria-expanded', 'true');
+          dd.style.display = 'block';
+        }
+      });
+      dt.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          dt.click();
+        }
+      });
+    });
+  </script>
+  
